@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PFAS BioScreen - Smart PFAS Risk Assessment</title>
+    <meta name="description" content="Fast, affordable PFAS water screening. Save 60-80% on testing costs with our rapid bioassay-based risk assessment.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0284C7;
+            --secondary: #0EA5E9;
+            --accent: #06B6D4;
+            --dark: #0C4A6E;
+            --light: #F0F9FF;
+            --white: #FFFFFF;
+            --text: #1E293B;
+            --text-light: #64748B;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .cta-button {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(2, 132, 199, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><path d="M0,300 Q300,100 600,300 T1200,300 L1200,600 L0,600 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+            animation: wave 20s ease-in-out infinite;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .hero-content .tagline {
+            font-size: 1.5rem;
+            color: var(--light);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            display: block;
+        }
+        
+        .stat-label {
+            color: var(--light);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .hero-visual {
+            position: relative;
+            animation: fadeInUp 0.8s ease 0.3s backwards;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(6, 182, 212, 0.2));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero-image::before {
+            content: '🔬';
+            font-size: 8rem;
+            position: absolute;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Sections */
+        section {
+            padding: 6rem 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Problem Section */
+        .problem {
+            background: var(--light);
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .problem-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+        
+        .problem-card:nth-child(1) { animation-delay: 0.1s; }
+        .problem-card:nth-child(2) { animation-delay: 0.2s; }
+        .problem-card:nth-child(3) { animation-delay: 0.3s; }
+        .problem-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .problem-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .problem-card h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .problem-card p {
+            color: var(--text-light);
+        }
+        
+        /* Solution Section */
+        .solution {
+            background: white;
+        }
+        
+        .solution-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .solution-visual {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(135deg, var(--light), var(--secondary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .solution-visual::before {
+            content: '⚡';
+            font-size: 10rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        
+        .solution-content h3 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        .solution-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        
+        .solution-features li {
+            padding: 1rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+        
+        .solution-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            background: var(--dark);
+            color: white;
+        }
+        
+        .how-it-works .section-header h2,
+        .how-it-works .section-header p {
+            color: white;
+        }
+        
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            position: relative;
+        }
+        
+        .step {
+            text-align: center;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.1s; }
+        .step:nth-child(2) { animation-delay: 0.3s; }
+        .step:nth-child(3) { animation-delay: 0.5s; }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        .step:nth-child(1) .step-number { animation-delay: 0s; }
+        .step:nth-child(2) .step-number { animation-delay: 0.3s; }
+        .step:nth-child(3) .step-number { animation-delay: 0.6s; }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .step p {
+            color: var(--light);
+        }
+        
+        /* ROI Section */
+        .roi {
+            background: white;
+        }
+        
+        .roi-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .roi-card {
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .roi-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .roi-card.traditional {
+            background: linear-gradient(135deg, #FEE2E2, #FEF2F2);
+            border: 3px solid #DC2626;
+        }
+        
+        .roi-card.bioscreen {
+            background: linear-gradient(135deg, #D1FAE5, #F0FDF4);
+            border: 3px solid #16A34A;
+        }
+        
+        .roi-label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .roi-card.traditional .roi-label {
+            color: #991B1B;
+        }
+        
+        .roi-card.bioscreen .roi-label {
+            color: #166534;
+        }
+        
+        .roi-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        
+        .roi-card.traditional .roi-amount {
+            color: #DC2626;
+        }
+        
+        .roi-card.bioscreen .roi-amount {
+            color: #16A34A;
+        }
+        
+        .roi-details {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .savings-banner {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            border-radius: 12px;
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        .savings-banner h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Packages Section */
+        .packages {
+            background: var(--light);
+        }
+        
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .package {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+        
+        .package:nth-child(1) { animation-delay: 0.1s; }
+        .package:nth-child(2) { animation-delay: 0.2s; }
+        .package:nth-child(3) { animation-delay: 0.3s; }
+        
+        .package.featured {
+            border: 3px solid var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .package:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .package.featured:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .package-name {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+        
+        .package-price {
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .package-unit {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        
+        .package-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .package-features li {
+            padding: 0.75rem 0;
+            color: var(--text);
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .package-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .package-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .package-button:hover {
+            background: var(--dark);
+        }
+        
+        /* Why Choose Us */
+        .why-us {
+            background: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+        
+        .feature:nth-child(1) { animation-delay: 0.1s; }
+        .feature:nth-child(2) { animation-delay: 0.2s; }
+        .feature:nth-child(3) { animation-delay: 0.3s; }
+        .feature:nth-child(4) { animation-delay: 0.4s; }
+        .feature:nth-child(5) { animation-delay: 0.5s; }
+        .feature:nth-child(6) { animation-delay: 0.6s; }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+            border: 3px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover .feature-icon {
+            transform: rotate(360deg);
+            background: var(--primary);
+        }
+        
+        .feature h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            text-align: center;
+        }
+        
+        .contact .section-header h2,
+        .contact .section-header p {
+            color: white;
+        }
+        
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .contact-item {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .contact-item-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-item h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .contact-item a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        footer p {
+            color: var(--light);
+        }
+        
+        /* Animations on Scroll */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-container,
+            .solution-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .problem-grid,
+            .features-grid,
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .roi-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">PB</div>
+                <span>PFAS BioScreen</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#why-us">Why Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="cta-button">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Stop Overpaying for PFAS Testing</h1>
+                <p class="tagline">Fast, Affordable Water Screening That Saves You 60-80% on Testing Costs</p>
+                <a href="#contact" class="cta-button" style="font-size: 1.1rem; padding: 1rem 2rem;">Schedule Free Consultation</a>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">1-3</span>
+                        <span class="stat-label">Days Turnaround</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">60-80%</span>
+                        <span class="stat-label">Cost Savings</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Confidence</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="hero-image"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <div class="section-header">
+                <h2>The PFAS Testing Challenge</h2>
+                <p>Traditional testing is expensive, slow, and inefficient</p>
+            </div>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <span class="problem-icon">💰</span>
+                    <h3>Too Expensive</h3>
+                    <p>Traditional LC-MS testing costs $300-600 per sample, making comprehensive monitoring unaffordable.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <span class="problem-icon">⏰</span>
+                    <h3>Too Slow</h3>
+                    <p>2-4 week turnaround times delay critical decisions and slow down remediation efforts.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <span class="problem-icon">📊</span>
+                    <h3>Wasteful</h3>
+                    <p>Most samples test below action levels—you're paying premium prices for unnecessary detailed analysis.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <span class="problem-icon">🚫</span>
+                    <h3>Limited Coverage</h3>
+                    <p>Budget constraints prevent testing enough sites frequently enough to stay ahead of contamination.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution" id="solution">
+        <div class="container">
+            <div class="solution-container">
+                <div class="solution-visual"></div>
+                
+                <div class="solution-content">
+                    <h3>Introducing PFAS BioScreen</h3>
+                    <p style="font-size: 1.3rem; color: var(--primary); font-weight: 600; margin-bottom: 1.5rem;">Screen More. Spend Less. Act Faster.</p>
+                    
+                    <p style="margin-bottom: 1.5rem;">We use rapid screening to classify water samples as Low, Medium, or High risk in just 1-3 days. Only Medium and High-risk samples go to expensive LC-MS testing.</p>
+                    
+                    <ul class="solution-features">
+                        <li>Monitor more sites within your budget</li>
+                        <li>Get results faster for time-sensitive decisions</li>
+                        <li>Save 60-80% on total testing costs</li>
+                        <li>Make data-driven decisions about resource allocation</li>
+                    </ul>
+                    
+                    <a href="#contact" class="cta-button">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How PFAS BioScreen Works</h2>
+                <p>Simple, fast, and effective</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>You Send Samples</h3>
+                    <p>Ship water samples to our lab or we collect on-site. Simple, secure, and tracked.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>We Screen Rapidly</h3>
+                    <p>Our validated methodology delivers clear risk classification in just 1-3 days.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>You Get Results</h3>
+                    <p>Receive Low/Medium/High risk scores with actionable recommendations for next steps.</p>
+                </div>
+            </div>
+            
+            <div style="max-width: 800px; margin: 4rem auto; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 12px; text-align: center; backdrop-filter: blur(10px);">
+                <h3 style="margin-bottom: 1rem;">For Medium & High-Risk Samples</h3>
+                <p>We coordinate detailed LC-MS testing with our partner labs—only when needed, saving you money on unnecessary analysis.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Section -->
+    <section class="roi">
+        <div class="container">
+            <div class="section-header">
+                <h2>Real-World Savings Example</h2>
+                <p>Municipal water utility: 50 monitoring sites, monthly testing</p>
+            </div>
+            
+            <div class="roi-comparison">
+                <div class="roi-card traditional">
+                    <div class="roi-label">❌ Traditional Approach</div>
+                    <div class="roi-amount">$25,000</div>
+                    <div class="roi-details">per month</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: #991B1B;">50 samples × $500 = $25,000/month<br>Annual cost: $300,000</div>
+                </div>
+                
+                <div class="roi-card bioscreen">
+                    <div class="roi-label">✓ PFAS BioScreen</div>
+                    <div class="roi-amount">$15,000</div>
+                    <div class="roi-details">per month</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: #166534;">50 screens × $200 + 10 LC-MS × $500<br>Annual cost: $180,000</div>
+                </div>
+            </div>
+            
+            <div class="savings-banner">
+                <h3>Annual Savings: $120,000</h3>
+                <p>40% cost reduction while testing MORE frequently and comprehensively</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section class="packages" id="packages">
+        <div class="container">
+            <div class="section-header">
+                <h2>Service Packages</h2>
+                <p>Choose the solution that fits your needs</p>
+            </div>
+            
+            <div class="packages-grid">
+                <div class="package">
+                    <h3 class="package-name">Rapid Screening</h3>
+                    <div class="package-price">$150-250</div>
+                    <div class="package-unit">per sample</div>
+                    <ul class="package-features">
+                        <li>1-3 day turnaround</li>
+                        <li>Risk classification</li>
+                        <li>Basic report</li>
+                        <li>Email support</li>
+                    </ul>
+                    <button class="package-button">Get Started</button>
+                </div>
+                
+                <div class="package featured">
+                    <div class="featured-badge">Most Popular</div>
+                    <h3 class="package-name">Screening + Validation</h3>
+                    <div class="package-price">$400-600</div>
+                    <div class="package-unit">per sample</div>
+                    <ul class="package-features">
+                        <li>All Rapid features</li>
+                        <li>LC-MS confirmation</li>
+                        <li>Comprehensive report</li>
+                        <li>PFAS identification</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="package-button">Get Started</button>
+                </div>
+                
+                <div class="package">
+                    <h3 class="package-name">Monitoring Program</h3>
+                    <div class="package-price">$2,000+</div>
+                    <div class="package-unit">per month</div>
+                    <ul class="package-features">
+                        <li>Multiple site screening</li>
+                        <li>Trend analysis</li>
+                        <li>Priority service</li>
+                        <li>Dedicated support</li>
+                        <li>Custom reporting</li>
+                    </ul>
+                    <button class="package-button">Contact Sales</button>
+                </div>
+            </div>
+            
+            <p style="text-align: center; margin-top: 2rem; color: var(--text-light); font-style: italic;">Custom pricing available for large-scale monitoring programs</p>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-us" id="why-us">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose PFAS BioScreen?</h2>
+                <p>Credibility, expertise, and proven results</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🎓</div>
+                    <h3>PhD-Led Science</h3>
+                    <p>10+ years environmental research experience at Wayne State University</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">📚</div>
+                    <h3>Peer-Reviewed</h3>
+                    <p>Published validation studies in leading scientific journals</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Trusted Partners</h3>
+                    <p>Integrated with certified LC-MS laboratories for validation</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🌊</div>
+                    <h3>Great Lakes Expertise</h3>
+                    <p>Deep understanding of regional water quality challenges</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Proven Results</h3>
+                    <p>Validated methodology with high accuracy for risk prediction</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Regulatory Aligned</h3>
+                    <p>Methods designed to support EPA compliance requirements</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ready to Start Saving?</h2>
+                <p>Let's discuss your PFAS monitoring needs</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📧</div>
+                        <h3>Email</h3>
+                        <a href="mailto:kishore@pfasbioscreen.com">kishore@pfasbioscreen.com</a>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📱</div>
+                        <h3>Phone</h3>
+                        <a href="tel:+15864306806">(586) 430-6806</a>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">📍</div>
+                        <h3>Location</h3>
+                        <p>Detroit, Michigan</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 3rem;">
+                    <a href="mailto:kishore@pfasbioscreen.com" class="cta-button" style="font-size: 1.2rem; padding: 1.2rem 2.5rem;">Schedule Free Consultation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 PFAS BioScreen. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Detroit, Michigan | Serving the Great Lakes Region</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Add hover effects to buttons
+        document.querySelectorAll('.cta-button, .package-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
